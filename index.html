@@ -22,6 +22,17 @@
             justify-content: center;
             background: var(--bg);
         }
+        .introduce {
+            position: absolute;
+            bottom: 12%;
+            width: 320px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .introduce a {
+            text-decoration: none;
+            color: powderblue;
+        }
     </style>
     <body>
         <css-doodle id="doodle">
@@ -32,6 +43,13 @@
             40%), transparent 0 ); animation: cycle @r(3s, 5s, .1) linear infinite; animation-delay:
             -@r(8s); z-index: 0; } @keyframes cycle { to { transform: rotate(1turn); } }
         </css-doodle>
+
+        <div class="introduce">
+            <a href="https://github.com/zrtch" target="_blank">Github</a>
+            <a href="https://blog.csdn.net/qq_41295954" target="_blank">CSDN</a>
+            <a href="https://twitter.com/Zhourt_" target="_blank">Twitter</a>
+            <a href="https://juejin.cn/user/3210229685696238" target="_blank">掘金</a>
+        </div>
     </body>
 
     <script>
