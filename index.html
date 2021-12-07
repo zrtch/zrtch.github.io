@@ -1,53 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/css-doodle/0.6.2/css-doodle.min.js"></script>
         <title>Cherry</title>
     </head>
-
     <style>
-        html {
-            height: 100%;
+        :root {
+            --bg: #051626;
         }
+
+        html,
         body {
             height: 100%;
             margin: 0;
         }
-        .container {
-            height: 100%;
-            width: 100%;
-            background: url(./images/bg1.jpg) no-repeat;
-            background-size: cover;
-        }
-        .introduce {
-            padding-left: 289px;
-            padding-top: 22px;
-        }
-        .introduce a {
-            color: khaki;
-            text-decoration: none;
-            margin-left: 20px;
-        }
-        .name {
-            padding-top: 134px;
-            padding-left: 200px;
-            font-size: 24px;
-            color: lightgreen;
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
         }
     </style>
     <body>
-        <div class="container">
-            <div>
-                <div class="name">Hi there, I'm Cherry! 👋</div>
-                <div class="introduce">
-                    <a href="https://github.com/zrtch" target="_blank">Github</a>
-                    <a href="https://blog.csdn.net/qq_41295954" target="_blank">CSDN</a>
-                    <a href="https://twitter.com/Zhourt_" target="_blank">Twitter</a>
-                    <a href="https://juejin.cn/user/3210229685696238" target="_blank">掘金</a>
-                </div>
-            </div>
-        </div>
+        <css-doodle id="doodle">
+            :doodle { @grid: 8x1 / 50vmin; } @size: calc(100% - @i() * 3%); @place-cell: center;
+            @shape: heart; overflow: hidden; :after { content: ''; @size: calc(100% - 5px); @shape:
+            heart; background: var(--bg); z-index: 1; } :before { content: ''; position: absolute;
+            @size: 200%; background: conic-gradient( @pd(#78E7D4, #E3383F, #EFF4DD, #F2A341) @p(10%,
+            40%), transparent 0 ); animation: cycle @r(3s, 5s, .1) linear infinite; animation-delay:
+            -@r(8s); z-index: 0; } @keyframes cycle { to { transform: rotate(1turn); } }
+        </css-doodle>
     </body>
+
+    <script>
+        document.body.addEventListener("click", function () {
+            doodle.update()
+        })
+    </script>
 </html>
