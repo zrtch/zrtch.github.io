@@ -22,7 +22,7 @@
             justify-content: center;
             background: var(--bg);
         }
-        .introduce {
+        /* .introduce {
             position: absolute;
             bottom: 12%;
             width: 320px;
@@ -32,6 +32,43 @@
         .introduce a {
             text-decoration: none;
             color: powderblue;
+        } */
+        .Cherry {
+            position: absolute;
+            bottom: 12%;
+            display: flex;
+            justify-content: space-between;
+        }
+        /* h1 {
+            font: 2em "Cinzel", serif;
+            font-weight: bold;
+            color: antiquewhite;
+            letter-spacing: 0.35em;
+            text-shadow: 0 0 25px rgba(254, 254, 255, 0.85);
+        } */
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+        }
+        @keyframes blink-caret {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        h1 {
+            /* width: 16.5em;
+            width: 30ch;  */
+            width: 20em;
+            margin: 2em 1em;
+            white-space: nowrap;
+            overflow: hidden;
+            color: wheat;
+            text-align: center;
+            font-family: fangsong;
+            animation: typing 4s steps(30, end),
+                /* # of steps = # of chars */ blink-caret 0.5s step-end infinite alternate;
         }
     </style>
     <body>
@@ -44,11 +81,15 @@
             -@r(8s); z-index: 0; } @keyframes cycle { to { transform: rotate(1turn); } }
         </css-doodle>
 
-        <div class="introduce">
+        <!-- <div class="introduce">
             <a href="https://github.com/zrtch" target="_blank">Github</a>
             <a href="https://blog.csdn.net/qq_41295954" target="_blank">CSDN</a>
             <a href="https://twitter.com/Zhourt_" target="_blank">Twitter</a>
             <a href="https://juejin.cn/user/3210229685696238" target="_blank">掘金</a>
+        </div> -->
+
+        <div class="Cherry">
+            <h1 id="h1">祝我亲爱的陈慧宝贝,生日快乐🎂 爱你💖</h1>
         </div>
     </body>
 
@@ -56,5 +97,20 @@
         document.body.addEventListener("click", function () {
             doodle.update()
         })
+    </script>
+
+    <script>
+        // var str = " 祝我亲爱的陈慧宝贝 生日快乐🍰"
+        // var i = 0
+        // function typing() {
+        //     var divTyping = document.getElementById("h1")
+        //     if (i <= str.length) {
+        //         divTyping.innerHTML = str.slice(0, i++) + "-"
+        //         setTimeout("typing()", 100)
+        //     } else {
+        //         divTyping.innerHTML = str
+        //     }
+        // }
+        // typing()
     </script>
 </html>
