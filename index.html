@@ -7,45 +7,21 @@
     </head>
     <style>
         :root {
-            --bg: #051626;
+            --bg: rgba(0, 10, 20, 1);
+            /* --bg: rgba(5, 22, 38, 1); */
         }
-
         html,
         body {
             height: 100%;
             margin: 0;
         }
-
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg);
-        }
-        /* .introduce {
-            position: absolute;
-            bottom: 12%;
-            width: 320px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .introduce a {
-            text-decoration: none;
-            color: powderblue;
-        } */
         .Cherry {
             position: absolute;
             bottom: 12%;
             display: flex;
             justify-content: space-between;
+            z-index: 9999;
         }
-        /* h1 {
-            font: 2em "Cinzel", serif;
-            font-weight: bold;
-            color: antiquewhite;
-            letter-spacing: 0.35em;
-            text-shadow: 0 0 25px rgba(254, 254, 255, 0.85);
-        } */
         @keyframes typing {
             from {
                 width: 0;
@@ -56,10 +32,17 @@
                 border-color: transparent;
             }
         }
-
+        #doodle {
+            z-index: 999;
+            position: fixed;
+        }
+        .container {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         h1 {
-            /* width: 16.5em;
-            width: 30ch;  */
             width: 20em;
             margin: 2em 1em;
             white-space: nowrap;
@@ -67,29 +50,54 @@
             color: wheat;
             text-align: center;
             font-family: fangsong;
-            animation: typing 4s steps(30, end),
-                /* # of steps = # of chars */ blink-caret 0.5s step-end infinite alternate;
+            animation: typing 4s steps(30, end), blink-caret 0.5s step-end infinite alternate;
+        }
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            background: rgba(0, 10, 20, 1);
+        }
+        #space {
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            position: fixed;
+        }
+
+        #warp {
+            position: absolute;
+            z-index: 99999;
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            top: 50%;
+            left: 50%;
+            margin: -40px 0 0 -40px;
+            color: rgba(255, 255, 255, 1);
+            text-align: center;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            font-family: cursive;
         }
     </style>
     <body>
-        <css-doodle id="doodle">
-            :doodle { @grid: 8x1 / 50vmin; } @size: calc(100% - @i() * 3%); @place-cell: center;
-            @shape: heart; overflow: hidden; :after { content: ''; @size: calc(100% - 5px); @shape:
-            heart; background: var(--bg); z-index: 1; } :before { content: ''; position: absolute;
-            @size: 200%; background: conic-gradient( @pd(#78E7D4, #E3383F, #EFF4DD, #F2A341) @p(10%,
-            40%), transparent 0 ); animation: cycle @r(3s, 5s, .1) linear infinite; animation-delay:
-            -@r(8s); z-index: 0; } @keyframes cycle { to { transform: rotate(1turn); } }
-        </css-doodle>
-
-        <!-- <div class="introduce">
-            <a href="https://github.com/zrtch" target="_blank">Github</a>
-            <a href="https://blog.csdn.net/qq_41295954" target="_blank">CSDN</a>
-            <a href="https://twitter.com/Zhourt_" target="_blank">Twitter</a>
-            <a href="https://juejin.cn/user/3210229685696238" target="_blank">掘金</a>
-        </div> -->
-
-        <div class="Cherry">
-            <h1 id="h1">矢志不渝, 只因是你! 陈慧 我爱你💖</h1>
+        <canvas id="space"> </canvas>
+        <div class="container">
+            <css-doodle id="doodle">
+                :doodle { @grid: 8x1 / 50vmin; } @size: calc(100% - @i() * 3%); @place-cell: center;
+                @shape: heart; overflow: hidden; :after { content: ''; @size: calc(100% - 5px);
+                @shape: heart; background: var(--bg); z-index: 1; } :before { content: ''; position:
+                absolute; @size: 200%; background: conic-gradient( @pd(#78E7D4, #E3383F, #EFF4DD,
+                #F2A341) @p(10%, 40%), transparent 0 ); animation: cycle @r(3s, 5s, .1) linear
+                infinite; animation-delay: -@r(8s); z-index: 0; } @keyframes cycle { to { transform:
+                rotate(1turn); } }
+            </css-doodle>
+            <div class="Cherry">
+                <h1 id="h1">矢志不渝, 只因是你! 陈慧 我爱你💖</h1>
+            </div>
         </div>
     </body>
 
@@ -100,18 +108,86 @@
     </script>
 
     <script>
-        var 1 = 0;
-        // var str = " 祝我亲爱的陈慧宝贝 生日快乐🍰"
-        // var i = 0
-        // function typing() {
-        //     var divTyping = document.getElementById("h1")
-        //     if (i <= str.length) {
-        //         divTyping.innerHTML = str.slice(0, i++) + "-"
-        //         setTimeout("typing()", 100)
-        //     } else {
-        //         divTyping.innerHTML = str
-        //     }
-        // }
-        // typing()
+        window.requestAnimFrame = (function () {
+            return window.requestAnimationFrame
+        })()
+        var canvas = document.getElementById("space")
+        var c = canvas.getContext("2d")
+
+        var numStars = 1900
+        var radius = "0." + Math.floor(Math.random() * 9) + 1
+        var focalLength = canvas.width * 2
+        var warp = 0
+        var centerX, centerY
+
+        var stars = [],
+            star
+        var i
+
+        var animate = true
+
+        initializeStars()
+
+        function executeFrame() {
+            if (animate) requestAnimFrame(executeFrame)
+            moveStars()
+            drawStars()
+        }
+
+        function initializeStars() {
+            centerX = canvas.width / 2
+            centerY = canvas.height / 2
+
+            stars = []
+            for (i = 0; i < numStars; i++) {
+                star = {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    z: Math.random() * canvas.width,
+                    o: "0." + Math.floor(Math.random() * 99) + 1,
+                }
+                stars.push(star)
+            }
+        }
+
+        function moveStars() {
+            for (i = 0; i < numStars; i++) {
+                star = stars[i]
+                star.z--
+
+                if (star.z <= 0) {
+                    star.z = canvas.width
+                }
+            }
+        }
+
+        function drawStars() {
+            var pixelX, pixelY, pixelRadius
+
+            if (canvas.width != window.innerWidth || canvas.width != window.innerWidth) {
+                canvas.width = window.innerWidth
+                canvas.height = window.innerHeight
+                initializeStars()
+            }
+            if (warp == 0) {
+                c.fillStyle = "rgba(0,10,20,1)"
+                c.fillRect(0, 0, canvas.width, canvas.height)
+            }
+            c.fillStyle = "rgba(255, 255, 255, " + radius + ")"
+            for (i = 0; i < numStars; i++) {
+                star = stars[i]
+
+                pixelX = (star.x - centerX) * (focalLength / star.z)
+                pixelX += centerX
+                pixelY = (star.y - centerY) * (focalLength / star.z)
+                pixelY += centerY
+                pixelRadius = 1 * (focalLength / star.z)
+
+                c.fillRect(pixelX, pixelY, pixelRadius, pixelRadius)
+                c.fillStyle = "rgba(255, 255, 255, " + star.o + ")"
+            }
+        }
+
+        executeFrame()
     </script>
 </html>
